@@ -70,10 +70,10 @@ $(function() {
             expect($('body').hasClass('menu-hidden')).toBe(true);
          })
 
-         /* TODO: Write a test that ensures the menu changes
-          * visibility when the menu icon is clicked. This test
-          * should have two expectations: does the menu display when
-          * clicked and does it hide when clicked again.
+         /* This test ensures the menu changes visibility when the 
+          * menu icon is clicked. This test has two expectations: 
+          * the menu should display when clicked, and it should
+          * hide when clicked again.
           */
           it('should open and close when menu icon is clicked', function(){
             // Store the jQuery object for the menu icon
@@ -87,18 +87,28 @@ $(function() {
             menuIcon.click(); // jQuery click action
             expect($('body').hasClass('menu-hidden')).toBe(true);
           })
+    });
 
-    /* TODO: Write a new test suite named "Initial Entries" */
+    /* Test suite for "Initial Entries" */
+    describe('Initial Entries', function() {
+        // Call the loadFeeds before each test
+        beforeEach(function(done){
+            // Make call to load feed
+            loadFeed(0, done);
+        });
 
-        /* TODO: Write a test that ensures when the loadFeed
-         * function is called and completes its work, there is at least
-         * a single .entry element within the .feed container.
-         * Remember, loadFeed() is asynchronous so this test wil require
-         * the use of Jasmine's beforeEach and asynchronous done() function.
+        /* This test ensures that after the loadFeed function is called and
+         * completes its work, there is at least a single '.entry' element
+         * within the .feed container.
          */
+        it('should have one or more entries after feed loads', function(done){
+            expect($('.feed .entry').length > 0).toBe(true);
+            done();
+        });
+    });
 
-    /* TODO: Write a new test suite named "New Feed Selection"
-
+    /* TODO: Write a new test suite named "New Feed Selection" */
+    describe('New Feed Selection', function(){
         /* TODO: Write a test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
