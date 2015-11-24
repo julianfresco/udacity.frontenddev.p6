@@ -68,7 +68,7 @@ $(function() {
          it('is hidden on when the page is loaded', function(){
             // Check body tag for the 'menu-hidden' class
             expect($('body').hasClass('menu-hidden')).toBe(true);
-         })
+         });
 
          /* This test ensures the menu changes visibility when the 
           * menu icon is clicked. This test has two expectations: 
@@ -86,7 +86,7 @@ $(function() {
             // Test the second click
             menuIcon.click(); // jQuery click action
             expect($('body').hasClass('menu-hidden')).toBe(true);
-          })
+          });
     });
 
     /* Test suite for "Initial Entries" */
