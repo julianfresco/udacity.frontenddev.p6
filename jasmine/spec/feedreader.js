@@ -34,6 +34,8 @@ $(function() {
             // Loop throguh allFeeds, check each feedItem for valid URL
             allFeeds.forEach(function(feedItem){
                 expect(feedItem.url).toBeDefined();
+                // Ensure it is a string
+                expect(typeof feedItem.url).toBe('string');
                 // Perhaps redundant, but let's see if feedItem.url evalutates 
                 // to a falsy expression but checking its negation
                 expect(!feedItem.url).not.toBe(true);
@@ -41,10 +43,20 @@ $(function() {
          });
 
 
-        /* TODO: Write a test that loops through each feed
-         * in the allFeeds object and ensures it has a name defined
-         * and that the name is not empty.
+        /* This test loops through each feed in the allFeeds object and
+         * ensures it has a name defined and that the name is not empty.
          */
+         it('and feed items have a name', function() {
+            // Loop throguh allFeeds, check each feedItem for valid name
+            allFeeds.forEach(function(feedItem){
+                expect(feedItem.name).toBeDefined();
+                // Ensure it is a string
+                expect(typeof feedItem.name).toBe('string');
+                // Perhaps redundant, but let's see if feedItem.name evalutates 
+                // to a falsy expression but checking its negation
+                expect(!feedItem.name).not.toBe(true);
+            });
+         });
 
     });
 
