@@ -123,10 +123,7 @@ $(function() {
         beforeEach(function(done){
             // Store the default values for comparison
             prevTitle = $('.header-title').html();
-            prevContents = [];
-            $('.feed .entry').each(function(){
-              prevContents.push( $(this).html() );
-            });
+            prevContents = $('.feed').html();
 
             // Make call to load feed
             loadFeed(++feedIndex, done);
@@ -149,10 +146,7 @@ $(function() {
          */
         it('should have new content', function(done){
             // Store the new content for comparison
-            currContents = [];
-            $('.feed .entry').each(function(){
-              currContents.push( $(this).html() );
-            });
+            currContents = $('.feed').html();
 
             // Test that feed items are different
             expect(currContents).not.toEqual(prevContents);
