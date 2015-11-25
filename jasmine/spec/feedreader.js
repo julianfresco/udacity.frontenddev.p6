@@ -63,6 +63,13 @@ $(function() {
 
     /* Test suite for "The menu" */
     describe('The menu', function() {
+        /* This tests ensures that the menu has the same number of items
+         * as the allFeeds array.
+         */
+        it('should have a link for every feed', function(){
+          expect($('.menu .feed-list li a').length).toEqual(allFeeds.length);
+        });
+
         /* This test ensures the menu element is hidden by default.
          */
          it('is hidden on when the page is loaded', function(){
@@ -109,19 +116,32 @@ $(function() {
 
     /* Test suite for "New Feed Selection" */
     describe('New Feed Selection', function(done){
-        var prevTitle, prevContents, currTitle, currContents;
+        var feedIndex = 0,
+            prevTitle, prevContents, currTitle, currContents;
         
         // Call the loadFeeds before each test
         beforeEach(function(done){
             // Store the default values for comparison
             prevTitle = $('.header-title').html();
             prevContents = [];
-            $('.feed .entry h2').each(function(){
+            $('.feed .entry').each(function(){
               prevContents.push( $(this).html() );
             });
 
             // Make call to load feed
-            loadFeed(1, done);
+            loadFeed(++feedIndex, done);
+        });
+
+        /* This test ensures that when a new feed is loaded by the loadFeed
+         * function, that the title actually changes.
+         */
+        it('should have a new title', function(done){
+            // Store the new content for comparison
+            currTitle = $('.header-title').html();
+
+            // Test that titles are different
+            expect(currTitle).not.toEqual(prevTitle);
+            done();
         });
 
         /* This test ensures that when a new feed is loaded by the loadFeed
@@ -129,14 +149,11 @@ $(function() {
          */
         it('should have new content', function(done){
             // Store the new content for comparison
-            currTitle = $('.header-title').html();
             currContents = [];
-            $('.feed .entry h2').each(function(){
+            $('.feed .entry').each(function(){
               currContents.push( $(this).html() );
             });
 
-            // Test that titles are different
-            expect(currTitle).not.toEqual(prevTitle);
             // Test that feed items are different
             expect(currContents).not.toEqual(prevContents);
             done();
