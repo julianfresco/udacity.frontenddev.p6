@@ -30,7 +30,7 @@ $(function() {
         /* This tests loops through each feed in the allFeeds object 
          * and ensures it has a URL defined and that the URL is not empty.
          */
-         it('and feed items have a URL', function() {
+         it('and feed items have a valid URL', function() {
             // Loop throguh allFeeds, check each feedItem for valid URL
             allFeeds.forEach(function(feedItem){
                 expect(feedItem.url).toBeDefined();
@@ -38,7 +38,7 @@ $(function() {
                 expect(typeof feedItem.url).toBe('string');
                 // Perhaps redundant, but let's see if feedItem.url evalutates 
                 // to a falsy expression but checking its negation
-                expect(!feedItem.url).not.toBe(true);
+                expect(feedItem.url).toBeTruthy();
             });
          });
 
@@ -54,7 +54,7 @@ $(function() {
                 expect(typeof feedItem.name).toBe('string');
                 // Perhaps redundant, but let's see if feedItem.name evalutates 
                 // to a falsy expression but checking its negation
-                expect(!feedItem.name).not.toBe(true);
+                expect(feedItem.name).toBeTruthy();
             });
          });
 
@@ -108,49 +108,48 @@ $(function() {
          * completes its work, there is at least a single '.entry' element
          * within the .feed container.
          */
-        it('should have one or more entries after feed loads', function(done){
+        it('should have one or more entries after feed loads', function(){
             expect($('.feed .entry').length > 0).toBe(true);
-            done();
         });
     });
 
     /* Test suite for "New Feed Selection" */
     describe('New Feed Selection', function(done){
-        var feedIndex = 0,
-            prevTitle, prevContents, currTitle, currContents;
+        var prevTitle, prevContents, currTitle, currContents;
         
         // Call the loadFeeds before each test
         beforeEach(function(done){
-            // Store the default values for comparison
-            prevTitle = $('.header-title').html();
-            prevContents = $('.feed').html();
+            // Load feed 0 before each test
+            loadFeed(0, function(){
+                // Store the default values for comparison
+                prevTitle = $('.header-title').html();
+                prevContents = $('.feed').html();
 
-            // Make call to load feed
-            loadFeed(++feedIndex, done);
+                // Load feed 1 for comparison
+                loadFeed(1, done);
+            }); 
         });
 
         /* This test ensures that when a new feed is loaded by the loadFeed
          * function, that the title actually changes.
          */
-        it('should have a new title', function(done){
+        it('should have a new title', function(){
             // Store the new content for comparison
             currTitle = $('.header-title').html();
 
             // Test that titles are different
             expect(currTitle).not.toEqual(prevTitle);
-            done();
         });
 
         /* This test ensures that when a new feed is loaded by the loadFeed
          * function, that the content actually changes.
          */
-        it('should have new content', function(done){
+        it('should have new content', function(){
             // Store the new content for comparison
             currContents = $('.feed').html();
 
             // Test that feed items are different
             expect(currContents).not.toEqual(prevContents);
-            done();
         });
     });
 }());
